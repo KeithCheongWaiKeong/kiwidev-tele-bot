@@ -11,6 +11,10 @@ This project uses the following stack:
   <th>Router</th>
   <td>Express</td>
 </tr>
+<tr>
+  <th>Container</th>
+  <td>Docker</td>
+</tr>
 </table>
 
 ## Getting Started
@@ -18,8 +22,9 @@ This project uses the following stack:
 Clone this repo and run the following commands from the project root:
 
 1. `npm install`
-2. `npm start`
-3. Visit http://localhost:3000 to see your app running
+2. `docker-compose build`
+3. `docker-compose up -d`
+4. Visit http://localhost:3000 to see your app running
 
 ## License
 
