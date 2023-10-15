@@ -4,4 +4,4 @@ services:
   ts-node-docker:
     build:
       target: production
-    command: node dist/index.js
+    command: node dist/app.js
