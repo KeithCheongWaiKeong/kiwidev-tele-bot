@@ -4,7 +4,7 @@
   "description": "A playground Telegram Bot for testing and fooling around",
   "main": "dist/app.js",
   "scripts": {
-    "start": "NODE_PATH=./build node build/index.js",
+    "start": "NODE_PATH=./dist node dist/app.js",
     "build": "tsc -p .",
     "dev": "nodemon src/index.ts"
   },
