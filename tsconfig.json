@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
+    "module": "CommonJS",
     "outDir": "dist",
-    "target": "esnext"
+    "target": "es2017",
+    "baseUrl": "./"
   },
-  // "include": ["./src/*"]
+  "include": [
+    "./src/*"
+  ]
 }

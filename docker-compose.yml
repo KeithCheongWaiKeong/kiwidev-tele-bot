@@ -5,11 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: base
+      target: production
     volumes:
       - ./src:/home/node/app/src
       - ./nodemon.json:/home/node/app/nodemon.json
     container_name: ts-node-docker
     ports:
-      - "${PORT}:${PORT}"
-    command: npm run dev
+      - 3000:3000

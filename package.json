@@ -4,9 +4,9 @@
   "description": "A playground Telegram Bot for testing and fooling around",
   "main": "dist/app.js",
   "scripts": {
-    "start": "NODE_PATH=./dist node dist/app.js",
-    "build": "tsc -p .",
-    "dev": "nodemon src/index.ts"
+    "start:dev": "nodemon src/app.ts",
+    "start": "node dist/app.js",
+    "build": "tsc -p . && cp -r src/public dist/public"
   },
   "author": "",
   "license": "ISC",
