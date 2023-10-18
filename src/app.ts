@@ -4,8 +4,14 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+const port = Number(process.env.PORT ?? 3000);
+const url = process.env.URL;
 const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
 const bot = new Telegraf(telegramBotToken);
+
+if (process.env.NODE_ENV === 'production') {
+  bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
+}
 
 bot.start((ctx) => {
   ctx.reply(`Hello ${ctx.from.first_name}!`);
@@ -21,7 +27,20 @@ bot.on('text', (ctx) => ctx.reply(`You have sent: ${ctx.message.text}`));
 
 bot.on('photo', (ctx) => ctx.reply('You look... okay'));
 
-bot.launch();
+if(process.env.NODE_ENV === 'production') {
+  bot.launch({
+    webhook:{
+        domain: url,
+        port
+    }
+  }).then(() => {
+    console.info(`The bot ${bot.botInfo.username} is running on server`);
+  });
+} else {
+  bot.launch().then(() => {
+    console.info(`The bot ${bot.botInfo.username} is running locally`);
+  });
+}
 
 // Graceful shutdown on stopping Node.js
 process.once('SIGINT', () => bot.stop('SIGINT'));
