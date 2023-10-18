@@ -8,8 +8,8 @@ This project uses the following stack:
   <td>Typescript</td>
 </tr>
 <tr>
-  <th>Router</th>
-  <td>Express</td>
+  <th>Telegram Bot API</th>
+  <td>Telegraf</td>
 </tr>
 <tr>
   <th>Container</th>
@@ -22,9 +22,9 @@ This project uses the following stack:
 Clone this repo and run the following commands from the project root:
 
 1. `npm install`
-2. `docker-compose build`
-3. `docker-compose up -d`
-4. Visit http://localhost:3000 to see your app running
+2. Create a .env file with the TELE_BOT_API_TOKEN variable
+3. `npm run start:dev`
+4. Start using your Telegram Bot
 
 ## License
 
