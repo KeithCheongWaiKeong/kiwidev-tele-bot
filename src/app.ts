@@ -1,22 +1,20 @@
 import { Telegraf } from "telegraf";
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// require('dotenv').config();
 
+const isLocal = process.env.ENV === 'test';
 const port = Number(process.env.PORT ?? 3000);
 const url = process.env.URL;
 const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
 const bot = new Telegraf(telegramBotToken);
 
-if (process.env.NODE_ENV === 'production') {
+if (!isLocal) {
   bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
 }
 
 bot.start((ctx) => {
-  ctx.reply(`Hello ${ctx.from.first_name}!`);
-  ctx.reply("Welcome to Keith's pilot Tele Bot!");
-  ctx.reply("You can use /help and /hello, type something or send a photo.");
+  ctx.reply(`
+  Hello ${ctx.from.first_name}!\nWelcome to Keith's pilot Tele Bot!\nYou can use /help and /hello, type something or send a photo.`);
 })
 
 bot.help((ctx) => ctx.reply("I don't really want to..."));
@@ -27,7 +25,7 @@ bot.on('text', (ctx) => ctx.reply(`You have sent: ${ctx.message.text}`));
 
 bot.on('photo', (ctx) => ctx.reply('You look... okay'));
 
-if(process.env.NODE_ENV === 'production') {
+if (!isLocal) {
   bot.launch({
     webhook:{
         domain: url,
