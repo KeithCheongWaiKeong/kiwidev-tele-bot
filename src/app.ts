@@ -1,12 +1,18 @@
+import * as express from "express";
+import { join } from "path";
 import { Telegraf } from "telegraf";
 
-// require('dotenv').config();
+require('dotenv').config();
 
 const isLocal = process.env.ENV === 'test';
 const port = Number(process.env.PORT ?? 3000);
 const url = process.env.URL;
 const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
+
+const app = express();
 const bot = new Telegraf(telegramBotToken);
+
+app.use(express.static(join(__dirname, "public")));
 
 if (!isLocal) {
   bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
@@ -25,11 +31,19 @@ bot.on('text', (ctx) => ctx.reply(`You have sent: ${ctx.message.text}`));
 
 bot.on('photo', (ctx) => ctx.reply('You look... okay'));
 
+app.get("*", (req, res) => {
+  res.redirect("/");
+});
+
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
+
 if (!isLocal) {
   bot.launch({
     webhook:{
-        domain: url,
-        port
+      domain: url,
+      port
     }
   }).then(() => {
     console.info(`The bot ${bot.botInfo.username} is running on server`);
