@@ -40,7 +40,7 @@ if (isLocal) {
   bot.launch({
     webhook:{
       domain: url,
-      port+1
+      port: port + 1
     }
   }).then(() => {
     console.info(`The bot ${bot.botInfo.username} is running on server`);
