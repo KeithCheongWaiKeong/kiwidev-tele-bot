@@ -37,15 +37,15 @@ app.listen(port, () => {
 });
 
 if (isLocal) {
-//   bot.launch({
-//     webhook:{
-//       domain: url,
-//       port
-//     }
-//   }).then(() => {
-//     console.info(`The bot ${bot.botInfo.username} is running on server`);
-//   });
-// } else {
+  bot.launch({
+    webhook:{
+      domain: url,
+      port+1
+    }
+  }).then(() => {
+    console.info(`The bot ${bot.botInfo.username} is running on server`);
+  });
+} else {
   bot.launch().then(() => {
     console.info(`The bot ${bot.botInfo.username} is running locally`);
   });
