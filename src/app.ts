@@ -12,10 +12,11 @@ const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
 const app = express();
 const bot = new Telegraf(telegramBotToken);
 
-app.use(express.static(join(__dirname, "public")));
+// app.use(express.static(join(__dirname, "public")));
 
 if (!isLocal) {
-  bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
+  app.use(async () => await bot.createWebhook({ domain: url }));
+  // bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
 }
 
 bot.start((ctx) => {
@@ -30,10 +31,6 @@ bot.command('hello', (ctx) => ctx.reply('Hello again!'));
 bot.on('text', (ctx) => ctx.reply(`You have sent: ${ctx.message.text}`));
 
 bot.on('photo', (ctx) => ctx.reply('You look... okay'));
-
-app.get("*", (req, res) => {
-  res.redirect("/");
-});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
