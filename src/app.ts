@@ -15,8 +15,8 @@ const bot = new Telegraf(telegramBotToken);
 // app.use(express.static(join(__dirname, "public")));
 
 if (!isLocal) {
-  app.use(bot.webhookCallback('/api/bot'));
-  bot.telegram.setWebhook(`${url}/api/bot`);
+  app.use(bot.webhookCallback(join('/api', 'bot')));
+  bot.telegram.setWebhook(join(url, 'api', 'bot'));
   // app.use(async () => await bot.createWebhook({ domain: url }));
   // bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
 }
