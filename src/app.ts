@@ -14,12 +14,16 @@ const bot = new Telegraf(telegramBotToken);
 
 // app.use(express.static(join(__dirname, "public")));
 
+
 if (!isLocal) {
-  app.use(bot.webhookCallback(join('/api', 'bot')));
-  bot.telegram.setWebhook(join(url, 'api', 'bot'));
+  console.log('Setting up Telegram Bot Webhook...');
+  app.use(bot.webhookCallback('/'));
+  bot.telegram.setWebhook(url);
   // app.use(async () => await bot.createWebhook({ domain: url }));
   // bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
 }
+
+console.log('Adding Telegram bot logic...');
 
 bot.start((ctx) => {
   ctx.reply(`
@@ -35,7 +39,7 @@ bot.on('text', (ctx) => ctx.reply(`You have sent: ${ctx.message.text}`));
 bot.on('photo', (ctx) => ctx.reply('You look... okay'));
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
+  console.log(`Express app listening on port ${port}...`);
 });
 
 if (isLocal) {
