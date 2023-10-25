@@ -15,7 +15,9 @@ const bot = new Telegraf(telegramBotToken);
 // app.use(express.static(join(__dirname, "public")));
 
 if (!isLocal) {
-  app.use(async () => await bot.createWebhook({ domain: url }));
+  app.use(bot.webhookCallback('/api/bot'));
+  bot.telegram.setWebhook(`${url}/api/bot`);
+  // app.use(async () => await bot.createWebhook({ domain: url }));
   // bot.telegram.setWebhook(`${url}/bot${telegramBotToken}`);
 }
 
@@ -37,15 +39,15 @@ app.listen(port, () => {
 });
 
 if (isLocal) {
-  bot.launch({
-    webhook:{
-      domain: url,
-      port: port + 1
-    }
-  }).then(() => {
-    console.info(`The bot ${bot.botInfo.username} is running on server`);
-  });
-} else {
+//   bot.launch({
+//     webhook:{
+//       domain: url,
+//       port: port + 1
+//     }
+//   }).then(() => {
+//     console.info(`The bot ${bot.botInfo.username} is running on server`);
+//   });
+// } else {
   bot.launch().then(() => {
     console.info(`The bot ${bot.botInfo.username} is running locally`);
   });
