@@ -29,7 +29,9 @@ bot.help((ctx) => ctx.reply('Have you tried turning it off and on again?'));
 
 bot.command('hello', (ctx) => ctx.reply('Hello again!'));
 
-bot.on(message('text'), (ctx) => ctx.reply(`You have sent: ${ctx.message.text}... Not really helpful at this point`));
+bot.command('testcommand', (ctx) => ctx.reply('Good job in finding this command, now stay away from it.'))
+
+bot.on(message('text'), (ctx) => ctx.reply(`You have sent: ${ctx.message.text}... Well, you said something!`));
 
 bot.on(message('photo'), (ctx) => ctx.reply('It looks... okay'));
 
