@@ -49,11 +49,13 @@ It is recommended to use Node Version Manager (nvm) to install Node, but there a
 
 Install PostgreSQL from the [website](https://www.postgresql.org/download/), I recommend to install [pgAdmin 4](https://www.pgadmin.org/download/) as well.
 
-Create a local server for testing and save the server URL in your local `.env` file.
+Create a local server for testing and save the connection URL in your local `.env` file. The URL should have the following layout: `postgresql://[username]:[password]@[host]:[port]/[database_name]`
+
+If you're using default settings: `postgresql://postgres:[master_password]@localhost:5432/postgres`
 
 ### Telegram Bot
 
-Create your own Telegram Bot using [BotFather](https://t.me/botfather) and save its API Token in your local `.env` file.
+Create your own Telegram Bot using [BotFather](https://t.me/botfather) and save its API Token in your local `.env` file. The token should look like: `123456789:AbCdfGhIJKlmNoQQRsTUVwxyZ`
 
 Here's a [tutorial](https://core.telegram.org/bots/features#botfather) in case you need some help.
 
