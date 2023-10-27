@@ -13,9 +13,12 @@ const app = express();
 const bot = new Telegraf(telegramBotToken);
 
 if (!isLocal) {
-  console.log('Setting up Telegram Bot Webhook...');
-  app.use(bot.webhookCallback('/'));
-  bot.telegram.setWebhook(url);
+  console.log('Removing old Telegram Bot Webhook...');
+  bot.telegram.setWebhook('').then(() => {
+    console.log('Setting up new Telegram Bot Webhook...');
+    app.use(bot.webhookCallback('/'));
+    bot.telegram.setWebhook(url);
+  });
 }
 
 console.log('Implementing Telegram bot logic...');
