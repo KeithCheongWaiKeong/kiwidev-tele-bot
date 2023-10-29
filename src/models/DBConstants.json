@@ -1,0 +1,53 @@
+{
+  "teams": [
+    {
+      "number": 1,
+      "name": "Panthers",
+      "code": "AAAAA"
+    },
+    {
+      "number": 2,
+      "name": "Cheetahs",
+      "code": "BBBBB"
+    },
+    {
+      "number": 3,
+      "name": "Leopards",
+      "code": "CCCCC"
+    }
+  ],
+  "locations": [
+    {
+      "number": 1,
+      "name": "Amphitheatre",
+      "riddle": "What game makes you jump on squares after throwing a pebble?",
+      "answer": "Hopscotch"
+    },
+    {
+      "number": 2,
+      "name": "Box Office",
+      "riddle": "What is a synomyn for run?",
+      "answer": "Sprint"
+    },
+    {
+      "number": 3,
+      "name": "Star Galleries",
+      "riddle": "What does worship use?",
+      "answer": "Music"
+    }
+  ],
+  "paths": [
+    {
+      "teamNumber": 1,
+      "route": ["AMPHI", "BOXOF", "STAGA"]
+    },
+    {
+      "teamNumber": 2,
+      "route": ["BOXOF", "STAGA", "AMPHI"]
+    },
+    {
+      "teamNumber": 3,
+      "route": ["STAGA", "AMPHI", "BOXOF"]
+    }
+  ]
+}

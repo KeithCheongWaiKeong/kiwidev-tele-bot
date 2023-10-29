@@ -6,7 +6,8 @@
   "scripts": {
     "start:dev": "nodemon src/app.ts",
     "start": "node dist/app.js",
-    "build": "tsc -p . && cp -r src/public dist/public"
+    "build": "tsc -p . && cp -r src/public dist/public",
+    "initialise-db": "nodemon src/models/initialiseDB.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,10 +18,17 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.33.0",
+    "sequelize-typescript": "^2.1.5",
     "telegraf": "^4.14.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.18",
+    "@types/node": "^20.8.9",
+    "@types/validator": "^13.11.5",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typegram": "^5.2.0",

@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Telegraf } from "telegraf";
-import { message } from 'telegraf/filters'
+import { Sequelize } from "sequelize-typescript";
+import { message } from "telegraf/filters";
 
 require('dotenv').config();
 
@@ -11,6 +12,15 @@ const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
 
 const app = express();
 const bot = new Telegraf(telegramBotToken);
+const sequelize = new Sequelize(process.env.DATABASE_URL, { dialect: 'postgres'});
+
+try {
+  sequelize.authenticate().then(() => {
+    console.log('Connection has been established successfully.');
+  });
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 if (!isLocal) {
   console.log('Removing old Telegram Bot Webhook...');
@@ -18,6 +28,8 @@ if (!isLocal) {
     console.log('Setting up new Telegram Bot Webhook...');
     app.use(bot.webhookCallback('/'));
     bot.telegram.setWebhook(url);
+  }).finally(() => {
+    console.log('Telegram Bot webhook established...')
   });
 }
 
@@ -45,9 +57,8 @@ app.listen(port, () => {
 });
 
 if (isLocal) {
-  bot.launch().then(() => {
-    console.info(`The bot ${bot.botInfo.username} is running locally`);
-  });
+  console.log('Running Telegram Bot locally...')
+  bot.launch();
 }
 
 // Graceful shutdown on stopping Node.js

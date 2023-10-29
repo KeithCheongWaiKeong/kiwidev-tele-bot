@@ -72,13 +72,22 @@ TELE_BOT_API_TOKEN=[Your Telegram Bot API Token]
 
 Use this command to install the Node packages:
 
-``` cmd
+``` node
 npm i
+```
+
+Use this command to initialise the database:
+
+``` node
+npm run initialise-db
+...
+When '[nodemon] clean exit - waiting for changes before restart' appears in your console:
+Exit nodemon using Ctrl+C
 ```
 
 Use this command to run the bot locally:
 
-``` cmd
+``` node
 npm run start:dev
 ```
 
