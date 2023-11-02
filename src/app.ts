@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Telegraf } from "telegraf";
+import { Markup, Telegraf } from "telegraf";
 import { Sequelize } from "sequelize-typescript";
 import { message } from "telegraf/filters";
 
@@ -35,29 +35,120 @@ if (!isLocal) {
 
 console.log('Implementing Telegram bot logic...');
 
-bot.start((ctx) => {
-  ctx.reply(`
-  Hello ${ctx.from.first_name}!\nWelcome to Keith's pilot Tele Bot!\nYou can use /help and /hello, type something or send a photo/video.`);
+bot.start(ctx => {
+  ctx.reply(`Hello ${ctx.from.first_name}!`).then(() => {
+    setTimeout(() => {
+      ctx.reply('Welcome to the Tele Bot demo for Fearless Camp!').then(() => {
+        setTimeout(() => {
+          ctx.reply('Right now, the demo will show buttons for you to press instead of replying by text.').then(() => {
+              setTimeout(() => {
+                ctx.reply('This should to show you the rough flow of how Keith thinks a user in Fearless Camp would use this bot.').then(() => {
+                    setTimeout(() => {
+                      ctx.reply('To start, enter a Team Number.', Markup.keyboard(['1']).oneTime().resize());
+                    }, 1000);
+                  });
+              }, 1000);
+            });
+        }, 1000);
+      });
+    }, 1000);
+  });
 })
 
-bot.help((ctx) => ctx.reply('Have you tried turning it off and on again?'));
+bot.hears('1', (ctx) => {
+  ctx.reply(`Are you Team 1?`, Markup.keyboard(['Yes', 'No']).oneTime().resize());
+})
 
-bot.command('hello', (ctx) => ctx.reply('Hello again!'));
+bot.hears('Yes', (ctx) => {
+  ctx.reply(`Please enter your team's Team Code.`, Markup.keyboard(['AAAAA']).oneTime().resize());
+})
 
-bot.command('testcommand', (ctx) => ctx.reply('Good job in finding this command, now stay away from it.'))
+bot.hears('No', (ctx) => {
+  ctx.reply(`There's only Team 1, too bad. Please enter your team's Team Code`, Markup.keyboard(['AAAAA']).oneTime().resize());
+})
 
-bot.on(message('text'), (ctx) => ctx.reply(`You have sent: ${ctx.message.text}... Well, you said something!`));
+bot.hears('AAAAA', (ctx) => {
+  ctx.reply('Verifying your Team Code...')
+  .then(() => {
+    setTimeout(() => {
+      ctx.reply('Verified!').then(() => {
+        ctx.reply(`Welcome ${ctx.from.first_name} of Team 1 to THE FEARLESS RACE 2023! 🎉`).then(() => {
+          ctx.reply(`[Fearless Race flavor text, instructions etc etc]`).then(() => {
+            ctx.reply('Here is your first riddle: What is brown and sticky?', Markup.keyboard(['Stick']).oneTime().resize());
+          })
+        })
+      });
+    }, 2000);
+  })
+})
 
-bot.on(message('photo'), (ctx) => ctx.reply('It looks... okay'));
+bot.hears('Stick', (ctx) => {
+  ctx.reply(`That's correct!`).then(() => {
+    ctx.reply('Your next location is Amphitheatre').then(() => {
+      ctx.reply('Please enter /nextLocation when you are ready to move on to the next location.', Markup.keyboard(['/nextLocation']).oneTime().resize());
+    })
+  })
+})
 
-bot.on(message('video'), (ctx) => ctx.reply('What... do I do with this?'));
+bot.command('nextLocation', (ctx) => {
+  ctx.reply('Good job on completing your Amphitheatre task!').then(() => {
+    ctx.reply(`Please enter the location's Completion Code.`, Markup.keyboard(['AMPHI']).oneTime().resize());
+  })
+})
+
+bot.hears('AMPHI', (ctx) => {
+  ctx.reply('Verifying your Completion Code...')
+  .then(() => {
+    setTimeout(() => {
+      ctx.reply('Verified!').then(() => {
+        ctx.reply('Here is your next riddle: What do you call a snowman throwing a tantrum?', Markup.keyboard(['Meltdown']).oneTime().resize());
+      });
+    }, 2000);
+  })
+})
+
+bot.hears('Meltdown', (ctx) => {
+  ctx.reply(`That's correct!`).then(() => {
+    ctx.reply('Your next location is the endpoint!').then(() => {
+      ctx.reply(`You're almost at the end!`).then(() => {
+        ctx.reply(`Go go go!`).then(() => {
+          ctx.reply(`Please enter /endGame upon reaching the endpoint.`, Markup.keyboard(['/endGame']).oneTime().resize());
+        })
+      })
+    })
+  })
+})
+
+bot.command('endGame', (ctx) => {
+  ctx.reply('Congratulations on completing the Fearless Race!').then(() => {
+    ctx.reply(`[More flavor text, final safety instructions, where to dismiss/hold the youths etc etc]`).then(() => {
+      ctx.reply(`Hope you've enjoyed the Fearless Race 2023!`).then(() => {
+        ctx.reply(`Please listen to your Team Teachers for any further instructions.`).then(() => {
+          ctx.reply(`Goodbye for now!`).then(() => {
+            ctx.replyWithSticker('CAACAgQAAxkBAAPFZUPSzrvr8RGiTmvj85nbCXsraEYAAlkSAALao5Us0aNrfJt1dvIzBA');
+          });
+        });
+      });
+    });
+  })
+})
+
+bot.help(ctx => {
+  ctx.reply(`In actuality, I think this command could be used to help users with the following:\n- Navigating the bot\n- Show the user's team progress\n- Show necessary contact info like medics, camp comm and tech support`).then(() => {
+    ctx.reply('But for now, here are all the replies and commands available in this demo.', Markup.keyboard(['1', 'Yes', 'No', 'AAAAA', 'Stick', '/nextLocation', 'AMPHI', 'Meltdown', '/endGame']).oneTime().resize())
+  })
+});
+
+bot.on([message('text'), message('photo'), message('video')], ctx => ctx.reply('Type /help or ask Keith if you need any help with this demo'));
+
+bot.on(message('sticker'), ctx => ctx.reply(`Sticker id is: ${ctx.message.sticker.file_id}`));
 
 app.listen(port, () => {
   console.log(`Express app listening on port ${port}...`);
 });
 
 if (isLocal) {
-  console.log('Running Telegram Bot locally...')
+  console.log('Running Telegram Bot locally...');
   bot.launch();
 }
 
