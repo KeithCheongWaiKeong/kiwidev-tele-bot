@@ -21,33 +21,39 @@
       "number": 1,
       "name": "Amphitheatre",
       "riddle": "What game makes you jump on squares after throwing a pebble?",
-      "answer": "Hopscotch"
+      "answer": "HOPSCOTCH"
     },
     {
       "number": 2,
       "name": "Box Office",
       "riddle": "What is a synomyn for run?",
-      "answer": "Sprint"
+      "answer": "SPRINT"
     },
     {
       "number": 3,
       "name": "Star Galleries",
       "riddle": "What does worship use?",
-      "answer": "Music"
+      "answer": "MUSIC"
+    },
+    {
+      "number": 4,
+      "name": "End Point",
+      "riddle": "With God, all things are...",
+      "answer": "HIMPOSSIBLE"
     }
   ],
   "paths": [
     {
       "teamNumber": 1,
-      "route": ["AMPHI", "BOXOF", "STAGA"]
+      "route": [1,2,3,4]
     },
     {
       "teamNumber": 2,
-      "route": ["BOXOF", "STAGA", "AMPHI"]
+      "route": [2,3,1,4]
     },
     {
       "teamNumber": 3,
-      "route": ["STAGA", "AMPHI", "BOXOF"]
+      "route": [3,1,2,4]
     }
   ]
 }

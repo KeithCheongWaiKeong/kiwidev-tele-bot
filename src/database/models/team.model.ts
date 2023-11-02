@@ -14,4 +14,7 @@ export default class Team extends Model {
 
   @Column
   currentPath: number = 0;
+
+  @Column
+  isOnRiddle: boolean = true;
 }
