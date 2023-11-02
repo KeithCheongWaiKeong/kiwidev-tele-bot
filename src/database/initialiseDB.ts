@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize-typescript";
 import * as DBConstants from './DBConstants.json';
-import Team from "./team.model";
-import Location from "./location.model";
-import Path from "./path.model";
+import Team from "./models/team.model";
+import Location from "./models/location.model";
+import Path from "./models/path.model";
 
 require('dotenv').config();
 
@@ -20,7 +20,7 @@ try {
       const { teams, locations, paths } = DBConstants;
 
       teams.forEach((value) => {
-        const team = new Team({ ...value, currentPath: 0 });
+        const team = new Team({ ...value, currentPath: 0, isOnRiddle: true });
         team.save();
       });
 
