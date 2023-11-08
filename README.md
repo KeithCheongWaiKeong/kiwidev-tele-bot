@@ -6,14 +6,16 @@ This is a Telegram Bot used to support an Amazing Race-like game.
 
 This project uses the following stack:
 
-| Stack | Software |
-| ---- | ---- |
-| Language | TypeScript |
-| Framework | Express |
-| Container | Docker |
-| Database | PostgreSQL |
-| Bot API Library | Telegraf |
-| Deployment Platform | FL0 |
+| Stack               | Software   |
+| ------------------- | ---------- |
+| Language            | TypeScript |
+| Framework           | Express    |
+| Container           | Docker     |
+| Database            | PostgreSQL |
+| Bot API Library     | Telegraf   |
+| Linter              | ESLint     |
+| Formatter           | Prettier   |
+| Deployment Platform | FL0        |
 
 ## Prerequisites
 
@@ -63,7 +65,7 @@ Here's a [tutorial](https://core.telegram.org/bots/features#botfather) in case y
 
 Create a `.env` file at the root directory with the following variables:
 
-``` dotenv
+```dotenv
 ENV=test
 PORT=3000
 DATABASE_URL=[Your PostgreSQL server URL]
@@ -72,13 +74,13 @@ TELE_BOT_API_TOKEN=[Your Telegram Bot API Token]
 
 Use this command to install the Node packages:
 
-``` node
+```node
 npm i
 ```
 
 Use this command to initialise the database:
 
-``` node
+```node
 npm run initialise-db
 ...
 When '[nodemon] clean exit - waiting for changes before restart' appears in your console:
@@ -87,7 +89,7 @@ Exit nodemon using Ctrl+C
 
 Use this command to run the bot locally:
 
-``` node
+```node
 npm run start:dev
 ```
 

@@ -1,22 +1,25 @@
 import { Sequelize } from "sequelize-typescript";
-import * as DBConstants from './DBConstants.json';
+import * as DBConstants from "./DBConstants.json";
 import Team from "./models/team.model";
 import Location from "./models/location.model";
 import Path from "./models/path.model";
 
-require('dotenv').config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("dotenv").config();
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, { dialect: 'postgres'});
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres",
+});
 
 try {
-  console.log('Authenticating connection...');
+  console.log("Authenticating connection...");
   sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-    console.log('Initialising DB Models...');
-    sequelize.addModels([__dirname + '/*.model.*']);
+    console.log("Connection has been established successfully.");
+    console.log("Initialising DB Models...");
+    sequelize.addModels([__dirname + "/*.model.*"]);
 
     sequelize.sync({ force: true }).then(() => {
-      console.log('Initialising DB Data...');
+      console.log("Initialising DB Data...");
       const { teams, locations, paths } = DBConstants;
 
       teams.forEach((value) => {
@@ -30,11 +33,14 @@ try {
       });
 
       paths.forEach((value) => {
-        const path = new Path({ teamNumber: value.teamNumber, route: JSON.stringify(value.route) });
+        const path = new Path({
+          teamNumber: value.teamNumber,
+          route: JSON.stringify(value.route),
+        });
         path.save();
       });
     });
   });
 } catch (error) {
-  console.error('Unable to connect to the database:', error);
+  console.error("Unable to connect to the database:", error);
 }

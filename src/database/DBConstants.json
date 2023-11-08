@@ -45,15 +45,15 @@
   "paths": [
     {
       "teamNumber": 1,
-      "route": [1,2,3,4]
+      "route": [1, 2, 3, 4]
     },
     {
       "teamNumber": 2,
-      "route": [2,3,1,4]
+      "route": [2, 3, 1, 4]
     },
     {
       "teamNumber": 3,
-      "route": [3,1,2,4]
+      "route": [3, 1, 2, 4]
     }
   ]
 }

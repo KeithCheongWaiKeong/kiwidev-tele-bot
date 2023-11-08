@@ -7,7 +7,8 @@
     "start:dev": "nodemon src/app.ts",
     "start": "node dist/app.js",
     "build": "tsc -p . && cp -r src/public dist/public",
-    "initialise-db": "nodemon src/database/models/initialiseDB.ts"
+    "initialise-db": "nodemon src/database/models/initialiseDB.ts",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +30,14 @@
     "@types/express": "^4.17.18",
     "@types/node": "^20.8.9",
     "@types/validator": "^13.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
     "nodemon": "^3.0.1",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "typegram": "^5.2.0",
     "typescript": "^5.2.2"
