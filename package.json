@@ -7,7 +7,7 @@
     "start:dev": "nodemon src/app.ts",
     "start": "node dist/app.js",
     "build": "tsc -p . && cp -r src/public dist/public",
-    "initialise-db": "nodemon src/database/models/initialiseDB.ts",
+    "initialise-db": "nodemon src/database/initialiseDB.ts",
     "prepare": "husky install"
   },
   "author": "",
