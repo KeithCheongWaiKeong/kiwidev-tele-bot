@@ -4,11 +4,11 @@ import Team from "./models/team.model";
 import Location from "./models/location.model";
 import Path from "./models/path.model";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
+  models: [__dirname + "/models"],
 });
 
 try {
@@ -16,7 +16,6 @@ try {
   sequelize.authenticate().then(() => {
     console.log("Connection has been established successfully.");
     console.log("Initialising DB Models...");
-    sequelize.addModels([__dirname + "/*.model.*"]);
 
     sequelize.sync({ force: true }).then(() => {
       console.log("Initialising DB Data...");

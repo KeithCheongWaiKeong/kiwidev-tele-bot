@@ -1,0 +1,51 @@
+COMMANDS
+
+/start (Start Scene + Location Scene)
+- Choose team number
+- Enter team code
+- First location riddle
+- First location answer (/submitanswer)
+- First location name
+- Clear first location (/nextlocation)
+- Second location riddle
+...
+- Clear third locaiton (/nextlocation)
+- End location riddle
+- End location answer (/submitanswer)
+- End location name
+- End game
+
+/help (Help Scene)
+- List current location, riddle and answer
+
+/reset 
+- Reset certain team progression
+
+/restart
+- Restart from start
+
+SCENES
+
+Start
+- Ask for team number
+- Verify team code
+- Check currentPath
+- Check isOnRoute
+- Send to Location scene (currentPath, isOnRoute)
+
+Game (currentPath, isOnRoute)
+- Location is route[currentPath]
+- isOnRiddle = true means user is decyphering the riddle
+- if isOnRiddle = true
+ - Show riddle
+ - Wait for user to send /submitanswer
+ - Verify answer (trim + uppercase)
+ - Send next location name
+ - Set currentPath += 1
+ - Set isOnRiddle = false
+- if isOnRiddle = false
+ - Wait for user to send /nextlocation
+ - Set isOnRiddle = true
+
+Help
+- WIP
