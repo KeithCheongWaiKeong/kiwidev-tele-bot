@@ -2,8 +2,8 @@ import * as express from "express";
 import { Markup, Telegraf } from "telegraf";
 import { Sequelize } from "sequelize-typescript";
 import { message } from "telegraf/filters";
+import Team from "./database/models/team.model";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 
 const isLocal = process.env.ENV === "test";
@@ -15,6 +15,7 @@ const app = express();
 const bot = new Telegraf(telegramBotToken);
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
+  models: [__dirname + "/database/models"],
 });
 
 try {
@@ -41,35 +42,16 @@ if (!isLocal) {
 
 console.log("Implementing Telegram bot logic...");
 
-bot.start((ctx) => {
-  ctx.reply(`Hello ${ctx.from.first_name}!`).then(() => {
-    setTimeout(() => {
-      ctx.reply("Welcome to the Tele Bot demo for Fearless Camp!").then(() => {
-        setTimeout(() => {
-          ctx
-            .reply(
-              "Right now, the demo will show buttons for you to press instead of replying by text.",
-            )
-            .then(() => {
-              setTimeout(() => {
-                ctx
-                  .reply(
-                    "This should to show you the rough flow of how Keith thinks a user in Fearless Camp would use this bot.",
-                  )
-                  .then(() => {
-                    setTimeout(() => {
-                      ctx.reply(
-                        "To start, enter a Team Number.",
-                        Markup.keyboard(["1"]).persistent().oneTime().resize(),
-                      );
-                    }, 1000);
-                  });
-              }, 1000);
-            });
-        }, 1000);
-      });
-    }, 1000);
-  });
+bot.start(async (ctx) => {
+  await ctx
+    .reply(`Hello ${ctx.from.first_name}!`)
+    .then(async () => await ctx.reply("Welcome to the Tele Bot demo for Fearless Camp!"))
+    .then(async () => await ctx.reply("Right now, the demo will show buttons for you to press instead of replying by text."))
+    .then(async () => await ctx.reply("This should to show you the rough flow of how Keith thinks a user in Fearless Camp would use this bot."))
+    .then(async () => await ctx.reply(
+          "To start, enter a Team Number.",
+          Markup.keyboard(["1"]).persistent().oneTime().resize(),
+        ));
 });
 
 bot.hears("1", (ctx) => {
@@ -213,6 +195,23 @@ bot.help((ctx) => {
           .resize(),
       );
     });
+});
+
+bot.command("database", async (ctx) => {
+  await Team.findOne({where: {number: 1}})
+  .then(async (team) => {
+    await ctx.reply("Changing the value of isOnRiddle for Team 1")
+    .then(async () => {
+      await ctx.reply(`Current value: ${team.isOnRiddle}`);
+      team.isOnRiddle = !team.isOnRiddle;
+      return team.save();
+    })
+  })
+  .then(async () =>
+    await Team.findOne({where: {number: 1}})
+      .then(async (newTeam) => await ctx.reply(`Value changed to: ${newTeam.isOnRiddle}`))
+  )
+  .catch(async (e) => await ctx.reply(`Error created: ${e}`));
 });
 
 bot.on([message("text"), message("photo"), message("video")], (ctx) =>
