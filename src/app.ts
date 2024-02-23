@@ -1,8 +1,8 @@
 import * as express from "express";
-import { Markup, Telegraf } from "telegraf";
-import { Sequelize } from "sequelize-typescript";
+import { Markup, Scenes, Telegraf, session } from "telegraf";
 import { message } from "telegraf/filters";
-import Team from "./database/models/team.model";
+import stationCodeScene from "./scenes/stationCodeScene";
+import { STATION_CODE_SCENE_ID } from "./scenes/contants";
 
 require("dotenv").config();
 
@@ -12,19 +12,10 @@ const url = process.env.URL;
 const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
 
 const app = express();
-const bot = new Telegraf(telegramBotToken);
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres",
-  models: [__dirname + "/database/models"],
-});
-
-try {
-  sequelize.authenticate().then(() => {
-    console.log("Connection has been established successfully.");
-  });
-} catch (error) {
-  console.error("Unable to connect to the database:", error);
-}
+const bot = new Telegraf<Scenes.WizardContext>(telegramBotToken);
+const stage = new Scenes.Stage<Scenes.WizardContext>([stationCodeScene])
+bot.use(session());
+bot.use(stage.middleware());
 
 if (!isLocal) {
   console.log("Removing old Telegram Bot Webhook...");
@@ -170,6 +161,8 @@ bot.command("endGame", (ctx) => {
   });
 });
 
+bot.command("stationCode", (ctx) => ctx.scene.enter(STATION_CODE_SCENE_ID));
+
 bot.help((ctx) => {
   ctx
     .reply(
@@ -196,29 +189,6 @@ bot.help((ctx) => {
       );
     });
 });
-
-bot.command("database", async (ctx) => {
-  await Team.findOne({where: {number: 1}})
-  .then(async (team) => {
-    await ctx.reply("Changing the value of isOnRiddle for Team 1")
-    .then(async () => {
-      await ctx.reply(`Current value: ${team.isOnRiddle}`);
-      team.isOnRiddle = !team.isOnRiddle;
-      return team.save();
-    })
-  })
-  .then(async () =>
-    await Team.findOne({where: {number: 1}})
-      .then(async (newTeam) => await ctx.reply(`Value changed to: ${newTeam.isOnRiddle}`))
-  )
-  .catch(async (e) => await ctx.reply(`Error created: ${e}`));
-});
-
-bot.on([message("text"), message("photo"), message("video")], (ctx) =>
-  ctx.reply(
-    "You have sent a reply that the demo does not know how to respond to. Type /start to start over again, type /help or ask Keith if you need any help with this demo.",
-  ),
-);
 
 bot.on(message("sticker"), (ctx) =>
   ctx.reply(`Sticker id is: ${ctx.message.sticker.file_id}`),
