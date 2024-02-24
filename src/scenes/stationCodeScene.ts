@@ -2,7 +2,7 @@ import { Composer, Scenes } from "telegraf";
 import { STATION_CODE_SCENE_ID, STATION_HINTS, STATION_IDS, TEAM_PATHS } from "./contants";
 import { message } from "telegraf/filters";
 
-const lastTeamNumber = 20;
+const lastTeamNumber = 16;
 let teamPath: number[] = [];
 
 const startStepHandler = new Composer<Scenes.WizardContext>();
