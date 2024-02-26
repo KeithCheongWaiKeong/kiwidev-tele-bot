@@ -8,7 +8,7 @@
     "start": "node dist/app.js",
     "build": "tsc -p . && cp -r src/public dist/public",
     "initialise-db": "nodemon src/database/initialiseDB.ts",
-    "prepare": "husky install || true"
+    "prepare": "node .husky/install.mjs"
   },
   "author": "",
   "license": "ISC",
