@@ -13,7 +13,7 @@ const telegramBotToken = process.env.TELE_BOT_API_TOKEN;
 
 const app = express();
 const bot = new Telegraf<Scenes.WizardContext>(telegramBotToken);
-const stage = new Scenes.Stage<Scenes.WizardContext>([stationCodeScene])
+const stage = new Scenes.Stage<Scenes.WizardContext>([stationCodeScene]);
 bot.use(session());
 bot.use(stage.middleware());
 
@@ -37,35 +37,33 @@ bot.start(async (ctx) => {
   await ctx
     .reply(`Hello ${ctx.from.first_name}!`)
     .then(async () => await ctx.reply("I am the Fearless Camp Telegram Bot!"))
-    .then(async () => await ctx.reply("You can use me the hint for your next location or get a map of ACSI."))
-    .then(async () => await ctx.reply(`Enter /nextLocation to get your next station hint\nEnter /map for the map of ACSI`,
-          Markup.keyboard([
-            "/nextLocation",
-            "/map",
-          ])
-            .persistent()
-            .oneTime()
-            .resize(),
-        ));
+    .then(
+      async () =>
+        await ctx.reply(
+          "You can use me the hint for your next location or get a map of ACSI.",
+        ),
+    )
+    .then(
+      async () =>
+        await ctx.reply(
+          `Enter /hint to get your next station hint\nEnter /map for the map of ACSI`,
+          Markup.keyboard(["/hint", "/map"]).oneTime().resize(),
+        ),
+    );
 });
 
-bot.command("nextLocation", (ctx) => ctx.scene.enter(STATION_CODE_SCENE_ID));
+bot.command("hint", (ctx) => ctx.scene.enter(STATION_CODE_SCENE_ID));
 
-bot.command("map", (ctx) => ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy")));
+bot.command("map", (ctx) =>
+  ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy")),
+);
 
 bot.help(async (ctx) => {
-  await ctx
-  .reply(
-      `Enter /nextLocation to get your next station hint\nEnter /map for the map of ACSI`,
-      Markup.keyboard([
-        "/nextLocation",
-        "/map",
-      ])
-        .persistent()
-        .oneTime()
-        .resize(),
-    );
-  });
+  await ctx.reply(
+    `Enter /hint to get your next station hint\nEnter /map for the map of ACSI`,
+    Markup.keyboard(["/hint", "/map"]).persistent().oneTime().resize(),
+  );
+});
 
 bot.on(message("sticker"), (ctx) =>
   ctx.reply(`Sticker id is: ${ctx.message.sticker.file_id}`),
