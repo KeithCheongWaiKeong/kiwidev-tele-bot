@@ -75,10 +75,10 @@ app.listen(port, () => {
   console.log(`Express app listening on port ${port}...`);
 });
 
-if (isLocal) {
-  console.log("Running Telegram Bot locally...");
+// if (isLocal) {
+//   console.log("Running Telegram Bot locally...");
   bot.launch();
-}
+// }
 
 // Graceful shutdown on stopping Node.js
 process.once("SIGINT", () => bot.stop("SIGINT"));
