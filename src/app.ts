@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Markup, Scenes, Telegraf, session } from "telegraf";
+import { Input, Markup, Scenes, Telegraf, session } from "telegraf";
 import { message } from "telegraf/filters";
 import stationCodeScene from "./scenes/stationCodeScene";
 import { STATION_CODE_SCENE_ID } from "./scenes/contants";
@@ -51,7 +51,7 @@ bot.start(async (ctx) => {
 
 bot.command("nextLocation", (ctx) => ctx.scene.enter(STATION_CODE_SCENE_ID));
 
-bot.command("map", (ctx) => ctx.replyWithPhoto({source: "src/assets/ACSIDemoMap.png"}));
+bot.command("map", (ctx) => ctx.replyWithPhoto(Input.fromLocalFile("src/assets/ACSIDemoMap.png")));
 
 bot.help(async (ctx) => {
   await ctx
@@ -75,10 +75,10 @@ app.listen(port, () => {
   console.log(`Express app listening on port ${port}...`);
 });
 
-// if (isLocal) {
-//   console.log("Running Telegram Bot locally...");
+bot.telegram.getMe().then(() => {
+  console.log("Bot started...");
   bot.launch();
-// }
+});
 
 // Graceful shutdown on stopping Node.js
 process.once("SIGINT", () => bot.stop("SIGINT"));
