@@ -1,4 +1,4 @@
-import { Composer, Scenes } from "telegraf";
+import { Composer, Markup, Scenes } from "telegraf";
 import { STATION_CODE_SCENE_ID, STATION_HINTS, STATION_IDS, TEAM_PATHS } from "./contants";
 import { message } from "telegraf/filters";
 
@@ -13,7 +13,15 @@ startStepHandler.command("leave", async (ctx) => {
 startStepHandler.on(message("text"), async (ctx) => {
 
   await ctx.reply("Enter your Team Number")
-    .then(() => ctx.reply("You can leave the query anytime using /leave"));
+    .then(() => ctx.reply("You can leave the query anytime using /leave",
+    Markup.keyboard([
+      "/nextLocation",
+      "/map",
+    ])
+      .persistent()
+      .oneTime()
+      .resize(),
+      ));
   return ctx.wizard.next();
 })
 
@@ -26,17 +34,41 @@ teamStepHandler.on(message("text"), async (ctx) => {
   const teamNumber = Number.parseInt(ctx.message.text);
   if(!Number.isInteger(teamNumber)) {
     await ctx.reply("Enter only your team number (e.g. 12)")
-    .then(() => ctx.reply("You can leave the query anytime using /leave"));
+    .then(() => ctx.reply("You can leave the query anytime using /leave",
+    Markup.keyboard([
+      "/nextLocation",
+      "/map",
+    ])
+      .persistent()
+      .oneTime()
+      .resize(),
+      ));
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   if(teamNumber <= 0 || teamNumber > lastTeamNumber) {
     await ctx.reply(`Enter a correct team number (between 1-${lastTeamNumber})`)
-    .then(() => ctx.reply("You can leave the query anytime using /leave"));
+    .then(() => ctx.reply("You can leave the query anytime using /leave",
+    Markup.keyboard([
+      "/nextLocation",
+      "/map",
+    ])
+      .persistent()
+      .oneTime()
+      .resize(),
+      ));
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   teamPath = TEAM_PATHS[teamNumber-1];
   await ctx.reply("Enter your location code (HALL, CLASS, AUDI, LOUNGE)")
-  .then(() => ctx.reply("You can leave the query anytime using /leave"));
+  .then(() => ctx.reply("You can leave the query anytime using /leave",
+    Markup.keyboard([
+      "/nextLocation",
+      "/map",
+    ])
+      .persistent()
+      .oneTime()
+      .resize(),
+      ));
   return ctx.wizard.next();
 });
 
@@ -49,7 +81,15 @@ stationCodeStepHandler.on(message("text"), async (ctx) => {
   const stationId: number = STATION_IDS[ctx.message.text.toUpperCase()] ?? -1;
   if(stationId === -1) {
     await ctx.reply("Invalid code, please try again")
-    .then(() => ctx.reply("You can leave the query anytime using /leave"));
+    .then(() => ctx.reply("You can leave the query anytime using /leave",
+    Markup.keyboard([
+      "/nextLocation",
+      "/map",
+    ])
+      .persistent()
+      .oneTime()
+      .resize(),
+      ));
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   const currentStation = teamPath.indexOf(stationId);
