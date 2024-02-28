@@ -51,7 +51,7 @@ bot.start(async (ctx) => {
 
 bot.command("nextLocation", (ctx) => ctx.scene.enter(STATION_CODE_SCENE_ID));
 
-bot.command("map", (ctx) => ctx.replyWithPhoto(Input.fromLocalFile("src/assets/ACSIDemoMap.png")));
+bot.command("map", (ctx) => ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy")));
 
 bot.help(async (ctx) => {
   await ctx
@@ -75,10 +75,7 @@ app.listen(port, () => {
   console.log(`Express app listening on port ${port}...`);
 });
 
-bot.telegram.getMe().then(() => {
-  console.log("Bot started...");
-  bot.launch();
-});
+bot.launch();
 
 // Graceful shutdown on stopping Node.js
 process.once("SIGINT", () => bot.stop("SIGINT"));

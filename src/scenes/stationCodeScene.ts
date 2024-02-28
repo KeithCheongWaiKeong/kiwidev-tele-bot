@@ -11,7 +11,9 @@ startStepHandler.command("leave", async (ctx) => {
   return ctx.scene.leave();
 })
 startStepHandler.on(message("text"), async (ctx) => {
-  await ctx.reply("Enter your Team Number");
+
+  await ctx.reply("Enter your Team Number")
+    .then(() => ctx.reply("You can leave the query anytime using /leave"));
   return ctx.wizard.next();
 })
 
@@ -23,15 +25,18 @@ teamStepHandler.command("leave", async (ctx) => {
 teamStepHandler.on(message("text"), async (ctx) => {
   const teamNumber = Number.parseInt(ctx.message.text);
   if(!Number.isInteger(teamNumber)) {
-    await ctx.reply("Enter only your team number (e.g. 12)");
+    await ctx.reply("Enter only your team number (e.g. 12)")
+    .then(() => ctx.reply("You can leave the query anytime using /leave"));
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   if(teamNumber <= 0 || teamNumber > lastTeamNumber) {
-    await ctx.reply(`Enter a correct team number (between 1 and ${lastTeamNumber})`);
+    await ctx.reply(`Enter a correct team number (between 1-${lastTeamNumber})`)
+    .then(() => ctx.reply("You can leave the query anytime using /leave"));
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   teamPath = TEAM_PATHS[teamNumber-1];
-  await ctx.reply("Enter your location code");
+  await ctx.reply("Enter your location code (HALL, CLASS, AUDI, LOUNGE)")
+  .then(() => ctx.reply("You can leave the query anytime using /leave"));
   return ctx.wizard.next();
 });
 
@@ -43,7 +48,8 @@ stationCodeStepHandler.command("leave", async (ctx) => {
 stationCodeStepHandler.on(message("text"), async (ctx) => {
   const stationId: number = STATION_IDS[ctx.message.text.toUpperCase()] ?? -1;
   if(stationId === -1) {
-    await ctx.reply("Invalid code, please try again");
+    await ctx.reply("Invalid code, please try again")
+    .then(() => ctx.reply("You can leave the query anytime using /leave"));
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   const currentStation = teamPath.indexOf(stationId);
