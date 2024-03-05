@@ -54,9 +54,28 @@ bot.start(async (ctx) => {
 
 bot.command("hint", (ctx) => ctx.scene.enter(STATION_CODE_SCENE_ID));
 
-bot.command("map", (ctx) =>
-  ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy")),
+bot.command(
+  "map",
+  async (ctx) =>
+    await ctx
+      .replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy"))
+      .then(async () => await ctx.reply("Wait... Wrong map!"))
+      .then(async () => await ctx.replyWithSticker("CAACAgUAAxkBAAIDNmXkn0xFvK7dBPLSBJzJt5O6BiKzAAJABwACzMbiAprSGyWFU3GHNAQ"))
+      .then(() => setTimeout(async () => {
+        await ctx.reply("Let me find the right one...")
+        .then(async () => await ctx.replyWithSticker("CAACAgUAAxkBAAIDQWXkn6V_OzX0M5hgW8BJ3IVDMjduAALhBgACzMbiAsMmZen7qe8JNAQ"))
+        .then(() => setTimeout(async () => {
+          await ctx.reply("Found it! (You can use /real_map to get this map 😉)")
+          .then(async () => await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy")))
+        }, 750))
+      }, 750))
 );
+
+bot.command(
+  "real_map",
+  async (ctx) =>
+    await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy"))
+  )
 
 bot.help(async (ctx) => {
   await ctx.reply(
