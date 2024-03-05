@@ -58,7 +58,7 @@ teamStepHandler.on(message("text"), async (ctx) => {
   }
   teamPath = TEAM_PATHS[teamNumber - 1];
   await ctx
-    .reply("Enter your location code (HALL, CLASS, AUDI, LOUNGE)")
+    .replyWithMarkdownV2("Enter your location code \\(Say `START` if you want your first hint\\)")
     .then(() =>
       ctx.reply(
         "You can leave the query anytime using /leave",
@@ -74,6 +74,13 @@ stationCodeStepHandler.command("leave", async (ctx) => {
   return ctx.scene.leave();
 });
 stationCodeStepHandler.on(message("text"), async (ctx) => {
+  if (ctx.message.text.toUpperCase() === "START") {
+    await ctx
+    .reply("Your next hint is...")
+    .then(() => ctx.replyWithMarkdownV2(STATION_HINTS[teamPath[0]]));
+  return ctx.scene.leave();
+  }
+
   const stationId: number = STATION_IDS[ctx.message.text.toUpperCase()] ?? -1;
   if (stationId === -1) {
     await ctx
@@ -96,7 +103,7 @@ stationCodeStepHandler.on(message("text"), async (ctx) => {
   const nextStationHint = STATION_HINTS[teamPath[currentStation + 1]];
   await ctx
     .reply("Your next hint is...")
-    .then(() => ctx.reply(nextStationHint));
+    .then(() => ctx.replyWithMarkdownV2(nextStationHint));
   return ctx.scene.leave();
 });
 

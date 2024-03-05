@@ -47,7 +47,7 @@ bot.start(async (ctx) => {
       async () =>
         await ctx.reply(
           `Enter /hint to get your next station hint\nEnter /map for the map of ACSI`,
-          Markup.keyboard(["/hint", "/map"]).oneTime().resize(),
+          Markup.keyboard([["/hint", "/map"]]).oneTime().resize(),
         ),
     );
 });
@@ -80,7 +80,7 @@ bot.command(
 bot.help(async (ctx) => {
   await ctx.reply(
     `Enter /hint to get your next station hint\nEnter /map for the map of ACSI`,
-    Markup.keyboard(["/hint", "/map"]).persistent().oneTime().resize(),
+    Markup.keyboard([["/hint", "/map"]]).oneTime().resize(),
   );
 });
 
