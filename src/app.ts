@@ -82,7 +82,7 @@ bot.command(
 bot.command(
   "real_map",
   async (ctx) =>
-    await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy"))
+    await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/FXm1fS1"))
   )
 
 //Help command
