@@ -82,7 +82,7 @@ stationCodeStepHandler.command("quit", async (ctx) => {
 stationCodeStepHandler.on(message("text"), async (ctx) => {
   if (ctx.message.text.toUpperCase() === "START") {
     await ctx
-    .reply("Your next hint is...")
+    .reply("Your next hint is... 🤔")
     .then(() => ctx.replyWithMarkdownV2(STATION_HINTS[teamPath[0]]));
   return ctx.scene.leave();
   }
