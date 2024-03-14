@@ -12,9 +12,18 @@ let teamPath: number[] = [];
 
 const startStepHandler = new Composer<Scenes.WizardContext>();
 startStepHandler.command("quit", async (ctx) => {
-  await ctx.replyWithSticker("CAACAgUAAxkBAAIEfWXuuAdt46bwKDAwk3mi3DzGQjQVAAIBBwACzMbiAmi6iojy_RarNAQ")
-  .then(() => ctx.reply("You can ask again using /hint",
-  Markup.keyboard([["/hint", "/map"]]).oneTime().resize()));
+  await ctx
+    .replyWithSticker(
+      "CAACAgUAAxkBAAIEfWXuuAdt46bwKDAwk3mi3DzGQjQVAAIBBwACzMbiAmi6iojy_RarNAQ",
+    )
+    .then(() =>
+      ctx.reply(
+        "You can ask again using /hint",
+        Markup.keyboard([["/hint", "/map"]])
+          .oneTime()
+          .resize(),
+      ),
+    );
   return ctx.scene.leave();
 });
 startStepHandler.on(message("text"), async (ctx) => {
@@ -31,16 +40,32 @@ startStepHandler.on(message("text"), async (ctx) => {
 
 const teamStepHandler = new Composer<Scenes.WizardContext>();
 teamStepHandler.command("quit", async (ctx) => {
-  await ctx.replyWithSticker("CAACAgUAAxkBAAIEfWXuuAdt46bwKDAwk3mi3DzGQjQVAAIBBwACzMbiAmi6iojy_RarNAQ")
-  .then(() => ctx.reply("You can ask again using /hint",
-  Markup.keyboard([["/hint", "/map"]]).oneTime().resize()));
+  await ctx
+    .replyWithSticker(
+      "CAACAgUAAxkBAAIEfWXuuAdt46bwKDAwk3mi3DzGQjQVAAIBBwACzMbiAmi6iojy_RarNAQ",
+    )
+    .then(() =>
+      ctx.reply(
+        "You can ask again using /hint",
+        Markup.keyboard([["/hint", "/map"]])
+          .oneTime()
+          .resize(),
+      ),
+    );
   return ctx.scene.leave();
 });
 teamStepHandler.on(message("text"), async (ctx) => {
   const teamNumber = Number.parseInt(ctx.message.text);
   if (!Number.isInteger(teamNumber)) {
-    await ctx.replyWithSticker("CAACAgUAAxkBAAIErWXuvBGh-udKcFrVP_Jn3Z4ZHRgUAAJOBwACzMbiAqeL7jcpiHnGNAQ")
-      .then(() => ctx.replyWithMarkdownV2("Enter *only* your team number \\(e\\.g\\. 12\\)"))
+    await ctx
+      .replyWithSticker(
+        "CAACAgUAAxkBAAIErWXuvBGh-udKcFrVP_Jn3Z4ZHRgUAAJOBwACzMbiAqeL7jcpiHnGNAQ",
+      )
+      .then(() =>
+        ctx.replyWithMarkdownV2(
+          "Enter *only* your team number \\(e\\.g\\. 12\\)",
+        ),
+      )
       .then(() =>
         ctx.reply(
           "You can stop looking for the hint anytime using /quit",
@@ -50,8 +75,13 @@ teamStepHandler.on(message("text"), async (ctx) => {
     return ctx.wizard.selectStep(ctx.wizard.cursor);
   }
   if (teamNumber <= 0 || teamNumber > lastTeamNumber) {
-    await ctx.replyWithSticker("CAACAgUAAxkBAAIErWXuvBGh-udKcFrVP_Jn3Z4ZHRgUAAJOBwACzMbiAqeL7jcpiHnGNAQ")
-    .then(() => ctx.reply(`Enter a correct team number (between 1-${lastTeamNumber})`))
+    await ctx
+      .replyWithSticker(
+        "CAACAgUAAxkBAAIErWXuvBGh-udKcFrVP_Jn3Z4ZHRgUAAJOBwACzMbiAqeL7jcpiHnGNAQ",
+      )
+      .then(() =>
+        ctx.reply(`Enter a correct team number (between 1-${lastTeamNumber})`),
+      )
       .then(() =>
         ctx.reply(
           "You can stop looking for the hint anytime using /quit",
@@ -62,7 +92,9 @@ teamStepHandler.on(message("text"), async (ctx) => {
   }
   teamPath = TEAM_PATHS[teamNumber - 1];
   await ctx
-    .replyWithMarkdownV2("Enter your location code 🔠 \\(Say `START` if you want your first hint\\)")
+    .replyWithMarkdownV2(
+      "Enter your location code 🔠 \\(Say `START` if you want your first hint\\)",
+    )
     .then(() =>
       ctx.reply(
         "You can stop looking for the hint anytime using /quit",
@@ -74,23 +106,35 @@ teamStepHandler.on(message("text"), async (ctx) => {
 
 const stationCodeStepHandler = new Composer<Scenes.WizardContext>();
 stationCodeStepHandler.command("quit", async (ctx) => {
-  await ctx.replyWithSticker("CAACAgUAAxkBAAIEfWXuuAdt46bwKDAwk3mi3DzGQjQVAAIBBwACzMbiAmi6iojy_RarNAQ")
-  .then(() => ctx.reply("You can ask again using /hint",
-  Markup.keyboard([["/hint", "/map"]]).oneTime().resize()));
+  await ctx
+    .replyWithSticker(
+      "CAACAgUAAxkBAAIEfWXuuAdt46bwKDAwk3mi3DzGQjQVAAIBBwACzMbiAmi6iojy_RarNAQ",
+    )
+    .then(() =>
+      ctx.reply(
+        "You can ask again using /hint",
+        Markup.keyboard([["/hint", "/map"]])
+          .oneTime()
+          .resize(),
+      ),
+    );
   return ctx.scene.leave();
 });
 stationCodeStepHandler.on(message("text"), async (ctx) => {
   if (ctx.message.text.toUpperCase() === "START") {
     await ctx
-    .reply("Your next hint is... 🤔")
-    .then(() => ctx.replyWithMarkdownV2(STATION_HINTS[teamPath[0]]));
-  return ctx.scene.leave();
+      .reply("Your next hint is... 🤔")
+      .then(() => ctx.replyWithMarkdownV2(STATION_HINTS[teamPath[0]]));
+    return ctx.scene.leave();
   }
 
   const stationId: number = STATION_IDS[ctx.message.text.toUpperCase()] ?? -1;
   if (stationId === -1) {
-    await ctx.replyWithSticker("CAACAgUAAxkBAAIErWXuvBGh-udKcFrVP_Jn3Z4ZHRgUAAJOBwACzMbiAqeL7jcpiHnGNAQ")
-    .then(() => ctx.reply("Invalid code, please try again"))
+    await ctx
+      .replyWithSticker(
+        "CAACAgUAAxkBAAIErWXuvBGh-udKcFrVP_Jn3Z4ZHRgUAAJOBwACzMbiAqeL7jcpiHnGNAQ",
+      )
+      .then(() => ctx.reply("Invalid code, please try again"))
       .then(() =>
         ctx.reply(
           "You can stop looking for the hint anytime using /quit",
@@ -103,7 +147,12 @@ stationCodeStepHandler.on(message("text"), async (ctx) => {
   if (currentStation === teamPath.length - 1) {
     await ctx
       .reply("You have cleared your last station!")
-      .then(async () => await ctx.replyWithSticker("CAACAgUAAxkBAAIEoWXuum_wWaFj4JF6PS7GYdDMQ04pAAJVBwACzMbiAiAi4_oE2ZSYNAQ"))
+      .then(
+        async () =>
+          await ctx.replyWithSticker(
+            "CAACAgUAAxkBAAIEoWXuum_wWaFj4JF6PS7GYdDMQ04pAAJVBwACzMbiAiAi4_oE2ZSYNAQ",
+          ),
+      )
       .then(async () => await ctx.reply("Thank you for playing! 🎉"));
     return ctx.scene.leave();
   }

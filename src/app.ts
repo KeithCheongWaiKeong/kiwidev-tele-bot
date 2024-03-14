@@ -36,9 +36,16 @@ console.log("Implementing Telegram bot logic...");
 //Start command
 bot.start(async (ctx) => {
   await ctx
-  .reply(`Hello ${ctx.from.first_name}! 👋`)
-  .then(async () => await ctx.replyWithSticker("CAACAgUAAxkBAAIE12XuxgzQFnQmQSEP44eWjq3LcXD0AAJtBwACzMbiAgFkNQhxFiOSNAQ"))
-    .then(async () => await ctx.reply("I am the Fearless Camp Telegram Bot! 🤖"))
+    .reply(`Hello ${ctx.from.first_name}! 👋`)
+    .then(
+      async () =>
+        await ctx.replyWithSticker(
+          "CAACAgUAAxkBAAIE12XuxgzQFnQmQSEP44eWjq3LcXD0AAJtBwACzMbiAgFkNQhxFiOSNAQ",
+        ),
+    )
+    .then(
+      async () => await ctx.reply("I am the Fearless Camp Telegram Bot! 🤖"),
+    )
     .then(
       async () =>
         await ctx.reply(
@@ -49,7 +56,9 @@ bot.start(async (ctx) => {
       async () =>
         await ctx.reply(
           `Enter /hint to get your next station hint\nEnter /map for the map of ACSI 👍`,
-          Markup.keyboard([["/hint", "/map"]]).oneTime().resize(),
+          Markup.keyboard([["/hint", "/map"]])
+            .oneTime()
+            .resize(),
         ),
     );
 });
@@ -66,15 +75,36 @@ bot.command(
     await ctx
       .replyWithPhoto(Input.fromURL("https://ibb.co/7SP7pFy"))
       .then(async () => await ctx.reply("Wait... Wrong map!"))
-      .then(async () => await ctx.replyWithSticker("CAACAgUAAxkBAAIDNmXkn0xFvK7dBPLSBJzJt5O6BiKzAAJABwACzMbiAprSGyWFU3GHNAQ"))
-      .then(() => setTimeout(async () => {
-        await ctx.reply("Let me find the right one...")
-        .then(async () => await ctx.replyWithSticker("CAACAgUAAxkBAAIDQWXkn6V_OzX0M5hgW8BJ3IVDMjduAALhBgACzMbiAsMmZen7qe8JNAQ"))
-        .then(() => setTimeout(async () => {
-          await ctx.reply("Found it! (You can use /real_map to get this map 😉)")
-          .then(async () => await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/FXm1fS1")))
-        }, 750))
-      }, 750))
+      .then(
+        async () =>
+          await ctx.replyWithSticker(
+            "CAACAgUAAxkBAAIDNmXkn0xFvK7dBPLSBJzJt5O6BiKzAAJABwACzMbiAprSGyWFU3GHNAQ",
+          ),
+      )
+      .then(() =>
+        setTimeout(async () => {
+          await ctx
+            .reply("Let me find the right one...")
+            .then(
+              async () =>
+                await ctx.replyWithSticker(
+                  "CAACAgUAAxkBAAIDQWXkn6V_OzX0M5hgW8BJ3IVDMjduAALhBgACzMbiAsMmZen7qe8JNAQ",
+                ),
+            )
+            .then(() =>
+              setTimeout(async () => {
+                await ctx
+                  .reply("Found it! (You can use /real_map to get this map 😉)")
+                  .then(
+                    async () =>
+                      await ctx.replyWithPhoto(
+                        Input.fromURL("https://ibb.co/xh8ZRbt"),
+                      ),
+                  );
+              }, 750),
+            );
+        }, 750),
+      ),
 );
 
 //Real_map command
@@ -82,15 +112,17 @@ bot.command(
 bot.command(
   "real_map",
   async (ctx) =>
-    await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/FXm1fS1"))
-  )
+    await ctx.replyWithPhoto(Input.fromURL("https://ibb.co/xh8ZRbt")),
+);
 
 //Help command
 
 bot.help(async (ctx) => {
   await ctx.reply(
     `Enter /hint to get your next station hint\nEnter /map for the map of ACSI 👍`,
-    Markup.keyboard([["/hint", "/map"]]).oneTime().resize(),
+    Markup.keyboard([["/hint", "/map"]])
+      .oneTime()
+      .resize(),
   );
 });
 

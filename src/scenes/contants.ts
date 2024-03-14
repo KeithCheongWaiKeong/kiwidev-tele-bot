@@ -1,7 +1,6 @@
 const STATION_CODE_SCENE_ID = "stationCode";
 
-const
-  RELAY = 0,
+const RELAY = 0,
   LASER = 1,
   DODGE_ONE = 2,
   DODGE_TWO = 3,
@@ -41,14 +40,22 @@ const TEAM_PATHS = [
 ];
 
 const STATION_HINTS = {
-  [RELAY]: "_In one place we gather to praise His name,\nPerformances and dancing fill this space\\._",
-  [LASER]: "_Through the door, tummies growl\\.\nOut the door, feeling whole\\._",
-  [DODGE_ONE]: "_Where hellos start and goodbyes end,\nBeyond here will friendships extend\\. \\(\\#1\\)_",
-  [DODGE_TWO]: "_Where hellos start and goodbyes end,\nBeyond here will friendships extend\\. \\(\\#2\\)_",
-  [ESCAPE_ONE]: "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#1\\)_",
-  [ESCAPE_TWO]: "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#2\\)_",
-  [ESCAPE_THREE]: "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#3\\)_",
-  [ESCAPE_FOUR]: "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#4\\)_",
+  [RELAY]:
+    "_In one place we gather to praise His name,\nPerformances and dancing fill this space\\._",
+  [LASER]:
+    "_Through the door, tummies growl\\.\nOut the door, feeling whole\\._",
+  [DODGE_ONE]:
+    "_Where hellos start and goodbyes end,\nBeyond here will friendships extend\\. \\(\\#1\\)_",
+  [DODGE_TWO]:
+    "_Where hellos start and goodbyes end,\nBeyond here will friendships extend\\. \\(\\#2\\)_",
+  [ESCAPE_ONE]:
+    "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#1\\)_",
+  [ESCAPE_TWO]:
+    "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#2\\)_",
+  [ESCAPE_THREE]:
+    "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#3\\)_",
+  [ESCAPE_FOUR]:
+    "_Books, pencils, desks and more\\.\nWhere ideas bloom, and minds explore\\. \\(\\#4\\)_",
 };
 
 export { STATION_CODE_SCENE_ID, TEAM_PATHS, STATION_IDS, STATION_HINTS };
