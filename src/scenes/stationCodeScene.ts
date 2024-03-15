@@ -124,7 +124,15 @@ stationCodeStepHandler.on(message("text"), async (ctx) => {
   if (ctx.message.text.toUpperCase() === "START") {
     await ctx
       .reply("Your next hint is... 🤔")
-      .then(() => ctx.replyWithMarkdownV2(STATION_HINTS[teamPath[0]]));
+      .then(() => ctx.replyWithMarkdownV2(STATION_HINTS[teamPath[0]]))
+      .then(() =>
+        ctx.reply(
+          "The answer to this hint lies in /map 🗺️\nEnter /hint again to look for the next hint! 👍",
+          Markup.keyboard([["/hint", "/map"]])
+            .oneTime()
+            .resize(),
+        ),
+      );
     return ctx.scene.leave();
   }
 
@@ -159,7 +167,15 @@ stationCodeStepHandler.on(message("text"), async (ctx) => {
   const nextStationHint = STATION_HINTS[teamPath[currentStation + 1]];
   await ctx
     .reply("Your next hint is... 🤔")
-    .then(() => ctx.replyWithMarkdownV2(nextStationHint));
+    .then(() => ctx.replyWithMarkdownV2(nextStationHint))
+    .then(() =>
+      ctx.reply(
+        "The answer to this hint lies in /map 🗺️\nEnter /hint again to look for the next hint! 👍",
+        Markup.keyboard([["/hint", "/map"]])
+          .oneTime()
+          .resize(),
+      ),
+    );
   return ctx.scene.leave();
 });
 
